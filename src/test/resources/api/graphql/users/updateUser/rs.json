@@ -1,0 +1,14 @@
+{
+  "data": {
+    "updateUser": {
+      "user": {
+        "email": "${update_email}",
+        "gender": "${update_gender}",
+        "id": ${id},
+        "name": "${update_name}",
+        "status": "${update_status}"
+      },
+      "clientMutationId": "1234"
+    }
+  }
+}

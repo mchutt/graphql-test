@@ -1,0 +1,6 @@
+{
+  "query": "mutation DeleteUser($id: Int!) { deleteUser(input: { id: $id }) { clientMutationId } }",
+  "variables": {
+    <#if id??>"id": ${id}</#if>
+  }
+}

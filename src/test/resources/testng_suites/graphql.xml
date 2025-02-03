@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite verbose="1" name="Test" parallel="methods" thread-count="5">
+
+    <test name="GraphQL tests (gorest)">
+        <classes>
+            <class name="com.solvd.gorest.PostsTest" />
+            <class name="com.solvd.gorest.UsersTest" />
+        </classes>
+    </test>
+
+</suite>

@@ -1,0 +1,10 @@
+{
+  "query": "mutation CreateUser($email: String!, $gender: String!, $name: String!, $status: String!, $clientMutationId: String!) { createUser(input: { email: $email, gender: $gender, name: $name, status: $status, clientMutationId: $clientMutationId }) { clientMutationId user { email gender id name status } } }",
+  "variables": {
+    <#if email??>"email": "${email}",</#if>
+    <#if gender??>"gender": "${gender}",</#if>
+    <#if name??>"name": "${name}",</#if>
+    <#if status??>"status": "${status}",</#if>
+    "clientMutationId": "7868"
+  }
+}

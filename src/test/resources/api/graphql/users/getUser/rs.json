@@ -1,0 +1,11 @@
+{
+  "data": {
+    "user": {
+      <#if name??>"name": "${name}",</#if>
+      <#if email??>"email": "${email}",</#if>
+      "gender": "male",
+      <#if id??>"id": ${id},</#if>
+      "status": "active"
+    }
+  }
+}

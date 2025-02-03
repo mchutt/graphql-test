@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "posts": {
+          "type": "object",
+          "properties": {
+            "totalCount": {
+              "type": "integer"
+            },
+            "nodes": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "userId": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "body",
+                    "id",
+                    "title",
+                    "userId"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "totalCount",
+            "nodes"
+          ]
+        }
+      },
+      "required": [
+        "posts"
+      ]
+    }
+  },
+  "required": [
+    "data"
+  ]
+}

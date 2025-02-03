@@ -1,0 +1,12 @@
+{
+  "query": "mutation UpdateUser($clientMutationId: String!, $email: String!, $gender: String!, $id: Int!, $name: String!, $status: String!) { updateUser(input: { clientMutationId: $clientMutationId, email: $email, gender: $gender, id: $id, name: $name, status: $status }) { user { email gender id name status } clientMutationId } }",
+  "variables": {
+    "clientMutationId": "1234",
+    <#if update_gender??>"gender": "${update_gender}",</#if>
+    <#if update_status??>"status": "${update_status}",</#if>
+    <#if id??>"id": ${id},</#if>
+    <#if update_email??>"email": "${update_email}",</#if>
+    <#if update_name??>"name": "${update_name}"</#if>
+  }
+}
+

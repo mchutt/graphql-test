@@ -1,0 +1,19 @@
+{
+  "errors": [
+    {
+      "message": "You need to authenticate your self to perform this action",
+      "locations": [
+        {
+          "line": "type:Integer",
+          "column": "type:Integer"
+        }
+      ],
+      "path": [
+        "createPost"
+      ]
+    }
+  ],
+  "data": {
+    "createPost": null
+  }
+}

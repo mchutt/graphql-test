@@ -1,0 +1,9 @@
+{
+  "query": "mutation CreatePost($clientMutationId: String, $userId: Int!, $title: String!, $body: String!) { createPost(input: { clientMutationId: $clientMutationId, userId: $userId, title: $title, body: $body }) { clientMutationId post { body id title userId } } }",
+  "variables": {
+    "clientMutationId": "12345",
+    <#if userId??>"userId": ${userId},</#if>
+    <#if title??>"title": "${title}",</#if>
+    <#if body??>"body": "${body}"</#if>
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "data": {
+    "createPost": {
+      "clientMutationId": "12345",
+      "post": {
+        "body": "${body}",
+        "id": "type:Integer",
+        "title": "${title}",
+        "userId": ${userId}
+      }
+    }
+  }
+}

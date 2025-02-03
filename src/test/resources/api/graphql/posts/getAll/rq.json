@@ -1,0 +1,3 @@
+{
+  "query": "query Posts { posts { totalCount nodes { body id title userId } } }"
+}

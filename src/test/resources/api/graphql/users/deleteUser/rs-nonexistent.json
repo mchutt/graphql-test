@@ -1,0 +1,30 @@
+{
+  "errors": [
+    {
+      "message": "Resource not found!",
+      "locations": [
+        {
+          "line": "type:Integer",
+          "column": "type:Integer"
+        }
+      ],
+      "path": [
+        "deleteUser"
+      ],
+      "extensions": {
+        "code": "NOT_FOUND",
+        "result": [
+          {
+            "fieldName": "id",
+            "messages": [
+              "Couldn't find record with id=${id}"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "data": {
+    "deleteUser": null
+  }
+}
