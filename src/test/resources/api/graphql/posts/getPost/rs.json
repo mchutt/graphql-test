@@ -1,0 +1,10 @@
+{
+  "data": {
+    "post": {
+      "body": "${body}",
+      "id": "type:Integer",
+      "title": "${title}",
+      "userId": "type:Integer"
+    }
+  }
+}

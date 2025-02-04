@@ -1,0 +1,13 @@
+{
+  "data": {
+    "updatePost": {
+      "clientMutationId": null,
+      "post": {
+        <#if update_body??>"body": "${update_body}",<#else>"body": "type:String",</#if>
+        "id": ${id},
+        <#if update_title??>"title": "${update_title}",<#else>"title": "type:String",</#if>
+        "userId": "type:Integer"
+      }
+    }
+  }
+}

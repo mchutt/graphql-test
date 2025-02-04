@@ -1,0 +1,10 @@
+{
+  "query": "mutation UpdatePost($input: updatePostInput!) { updatePost(input: $input) { clientMutationId post { body id title userId }}}",
+  "variables": {
+    "input": {
+      <#if update_body??>"body": "${update_body}",</#if>
+      <#if update_title??>"title": "${update_title}",</#if>
+      "id": ${id}
+    }
+  }
+}

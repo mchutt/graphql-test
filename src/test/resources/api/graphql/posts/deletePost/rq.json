@@ -1,0 +1,7 @@
+{
+  "query": "mutation DeletePost($id: Int!, $clientMutationId: String!) { deletePost(input: { id: $id, clientMutationId: $clientMutationId }) { clientMutationId } }",
+  "variables": {
+    <#if id??>"id": ${id},</#if>
+    "clientMutationId": "1234"
+  }
+}
