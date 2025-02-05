@@ -1,0 +1,13 @@
+{
+  "query": "mutation UpdateTodo($updateTodo: updateTodoInput!) { updateTodo(input: $updateTodo) { clientMutationId todo { dueOn id status title userId } } }",
+  "variables": {
+    "updateTodo": {
+      "id": ${id},
+      "clientMutationId": "1234",
+      "dueOn": "2025-02-05T18:00:00-03:00",
+      "status": "completed",
+      "title": "todo title",
+      "userId": 7678481
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "todos": {
+          "type": "object",
+          "properties": {
+            "totalCount": {
+              "type": "integer"
+            },
+            "nodes": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "dueOn": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "userId": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "dueOn",
+                    "id",
+                    "status",
+                    "title",
+                    "userId"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "totalCount",
+            "nodes"
+          ]
+        }
+      },
+      "required": [
+        "todos"
+      ]
+    }
+  },
+  "required": [
+    "data"
+  ]
+}

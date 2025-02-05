@@ -52,7 +52,7 @@ public class UsersTest implements IAbstractTest {
         };
     }
 
-    @Test(dependsOnMethods = {"createUserTest", "getUserByIdTest"}, dataProvider = "deleteUserData")
+    @Test(dependsOnMethods = {"createUserTest", "getUserByIdTest", "updateUserTest"}, dataProvider = "deleteUserData")
     public void deleteUserTest(String userId, String responseTemplatePath) {
         deleteUser(userId, responseTemplatePath);
     }

@@ -1,0 +1,9 @@
+{
+  "query": "mutation DeleteTodo($deleteTodo: deleteTodoInput!) { deleteTodo(input: $deleteTodo) { clientMutationId } }",
+  "variables": {
+    "deleteTodo": {
+      "clientMutationId": "1234",
+      "id": ${id}
+    }
+  }
+}

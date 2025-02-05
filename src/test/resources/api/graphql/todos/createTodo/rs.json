@@ -1,0 +1,13 @@
+{
+  "data": {
+    "createTodo": {
+      "todo": {
+        "dueOn": "2025-02-06T02:30:00+05:30",
+        "id": "type:Integer",
+        "status": "pending",
+        "title": "todo title",
+        "userId": 7678481
+      }
+    }
+  }
+}

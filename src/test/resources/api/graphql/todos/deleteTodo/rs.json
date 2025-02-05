@@ -1,0 +1,7 @@
+{
+  "data": {
+    "deleteTodo": {
+      "clientMutationId": "1234"
+    }
+  }
+}

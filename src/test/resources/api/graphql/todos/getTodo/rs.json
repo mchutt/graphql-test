@@ -1,0 +1,11 @@
+{
+  "data": {
+    "todo": {
+      "dueOn": "2025-02-06T02:30:00+05:30",
+      "id": ${id},
+      "status": "pending",
+      "title": "todo title",
+      "userId": "type:Integer"
+    }
+  }
+}
