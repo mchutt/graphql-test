@@ -4,9 +4,9 @@
     "updateTodo": {
       "id": ${id},
       "clientMutationId": "1234",
-      "dueOn": "2025-02-05T18:00:00-03:00",
-      "status": "completed",
-      "title": "todo title",
+      <#if dueOn??>"dueOn": "${dueOn}",</#if>
+      <#if status??>"status": "${status}",</#if>
+      <#if title??>"title": "${title}",</#if>
       "userId": 7678481
     }
   }

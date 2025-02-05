@@ -1,0 +1,2 @@
+In the rs.json file, dueOn should be equal to "2025-02-06T00:30:00+05:30" instead of ${dueOn} 
+because the api always returns a ZonedDateTime for India (+05:30) instead of Argentina (-03:00) or any other country

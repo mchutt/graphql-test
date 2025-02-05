@@ -3,10 +3,10 @@
     "updateTodo": {
       "clientMutationId": "1234",
       "todo": {
-        "dueOn": "2025-02-06T02:30:00+05:30",
         "id": "type:Integer",
-        "status": "completed",
-        "title": "todo title",
+        <#if dueOn??>"dueOn": "2025-02-06T00:30:00+05:30",<#else>"dueOn": "type:String",</#if>
+        <#if status??>"status": "${status}",<#else>"status": "type:String",</#if>
+        <#if title??>"title": "${title}",<#else>"title": "type:String",</#if>
         "userId": 7678481
       }
     }
