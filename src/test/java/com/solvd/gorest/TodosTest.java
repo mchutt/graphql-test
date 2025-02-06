@@ -9,23 +9,20 @@ import org.testng.annotations.Test;
 
 import java.util.Properties;
 
-import static com.solvd.gorest.utils.APIConstants.TOKEN;
+import static com.solvd.gorest.utils.APIConstants.USER_ID;
 
 public class TodosTest implements IAbstractTest {
 
-    private static final String USER_ID = "7678481";
-
     @Test
-    public void createTodoTest() {
-        createTodo(USER_ID);
+    public void testCreateTodo() {
+        createTodo();
     }
 
     @Test
-    public void getTodoByIdTest() {
-        Todo todo = createTodo(USER_ID);
+    public void testGetTodoById() {
+        Todo todo = createTodo();
 
         GetTodoByIdMethod api = new GetTodoByIdMethod();
-        api.setHeader("Authorization", "Bearer " + TOKEN);
         api.getProperties().setProperty("id", String.valueOf(todo.getId()));
         api.callAPIExpectSuccess();
         api.validateResponse();
@@ -47,11 +44,10 @@ public class TodosTest implements IAbstractTest {
     }
 
     @Test(dataProvider = "updateTodoData")
-    public void updateTodoTest(Properties props) {
-        Todo todo = createTodo(USER_ID);
+    public void testUpdateTodo(Properties props) {
+        Todo todo = createTodo();
 
         UpdateTodoMethod api = new UpdateTodoMethod();
-        api.setHeader("Authorization", "Bearer " + TOKEN);
         props.setProperty("id", String.valueOf(todo.getId()));
         api.setProperties(props);
         api.callAPIExpectSuccess();
@@ -59,30 +55,26 @@ public class TodosTest implements IAbstractTest {
     }
 
     @Test
-    public void deleteTodoTest() {
-        Todo todo = createTodo(USER_ID);
+    public void testDeleteTodo() {
+        Todo todo = createTodo();
 
         DeleteTodoMethod api = new DeleteTodoMethod();
-        api.setHeader("Authorization", "Bearer " + TOKEN);
         api.getProperties().setProperty("id", String.valueOf(todo.getId()));
         api.callAPIExpectSuccess();
         api.validateResponse();
     }
 
     @Test
-    public void getAllTodosTest() {
+    public void testGetAllTodos() {
         GetAllTodosMethod api = new GetAllTodosMethod();
-        api.setHeader("Authorization", "Bearer " + TOKEN);
         api.callAPIExpectSuccess();
         api.validateResponseAgainstSchema("api/graphql/todos/getAll/rs.schema");
     }
 
-
     //helper methods
-    private static Todo createTodo(String userId) {
+    private Todo createTodo() {
         CreateTodoMethod api = new CreateTodoMethod();
-        api.setHeader("Authorization", "Bearer " + TOKEN);
-        api.getProperties().setProperty("userId", userId);
+        api.getProperties().setProperty("userId", USER_ID);
         Response response = api.callAPIExpectSuccess();
         api.validateResponse();
         return response.jsonPath().getObject("data.createTodo.todo", Todo.class);
