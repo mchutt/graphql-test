@@ -1,6 +1,7 @@
 package com.solvd.gorest;
 
 import com.solvd.gorest.models.Todo;
+import com.solvd.gorest.models.User;
 import com.solvd.gorest.todos.*;
 import com.zebrunner.carina.core.IAbstractTest;
 import io.restassured.response.Response;
@@ -9,7 +10,7 @@ import org.testng.annotations.Test;
 
 import java.util.Properties;
 
-import static com.solvd.gorest.utils.APIConstants.USER_ID;
+import static com.solvd.gorest.UsersTest.createUser;
 
 public class TodosTest implements IAbstractTest {
 
@@ -73,8 +74,9 @@ public class TodosTest implements IAbstractTest {
 
     //helper methods
     private Todo createTodo() {
+        User user = createUser();
         CreateTodoMethod api = new CreateTodoMethod();
-        api.getProperties().setProperty("userId", USER_ID);
+        api.getProperties().setProperty("userId", user.getId());
         Response response = api.callAPIExpectSuccess();
         api.validateResponse();
         return response.jsonPath().getObject("data.createTodo.todo", Todo.class);

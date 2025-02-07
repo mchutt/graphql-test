@@ -6,7 +6,7 @@
         "id": "type:Integer",
         "status": "pending",
         "title": "todo title",
-        "userId": 7678481
+        "userId": ${userId}
       }
     }
   }

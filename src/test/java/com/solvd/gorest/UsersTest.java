@@ -83,7 +83,7 @@ public class UsersTest implements IAbstractTest {
     }
 
     //helper methods
-    private User createUser() {
+    static public User createUser() {
         CreateUserMethod api = new CreateUserMethod();
         Response response = api.callAPIExpectSuccess();
         api.validateResponseAgainstSchema(RESOURCES_PATH + "createUser/rs.schema");

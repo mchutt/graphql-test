@@ -1,13 +1,14 @@
 package com.solvd.gorest;
 
 import com.solvd.gorest.models.Post;
+import com.solvd.gorest.models.User;
 import com.solvd.gorest.posts.*;
 import com.zebrunner.carina.core.IAbstractTest;
 import io.restassured.response.Response;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static com.solvd.gorest.utils.APIConstants.USER_ID;
+import static com.solvd.gorest.UsersTest.createUser;
 
 public class PostsTest implements IAbstractTest {
     private static final String RESOURCES_PATH = "api/graphql/posts/";
@@ -22,8 +23,9 @@ public class PostsTest implements IAbstractTest {
 
     @Test(dataProvider = "createPostData")
     public void testCreatePost(boolean isAuthorized) {
+        User user = createUser();
         CreatePostMethod api = new CreatePostMethod();
-        api.getProperties().setProperty("userId", USER_ID);
+        api.getProperties().setProperty("userId", user.getId());
         if (!isAuthorized) {
             api.removeAuthorizationHeader();
             api.setResponseTemplate(RESOURCES_PATH + "createPost/rs-non-authorized.json");
@@ -73,8 +75,9 @@ public class PostsTest implements IAbstractTest {
 
     //helper methods
     private Post createPost() {
+        User user = createUser();
         CreatePostMethod api = new CreatePostMethod();
-        api.getProperties().setProperty("userId", USER_ID);
+        api.getProperties().setProperty("userId", user.getId());
         Response response = api.callAPIExpectSuccess();
         api.validateResponse();
         return response.jsonPath().getObject("data.createPost.post", Post.class);
