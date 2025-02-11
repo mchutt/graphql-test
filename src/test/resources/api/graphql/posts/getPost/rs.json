@@ -2,7 +2,7 @@
   "data": {
     "post": {
       "body": "${body}",
-      "id": "type:Integer",
+      "id": ${id},
       "title": "${title}",
       "userId": "type:Integer"
     }

@@ -5,6 +5,7 @@ import com.solvd.gorest.models.User;
 import com.solvd.gorest.posts.*;
 import com.zebrunner.carina.core.IAbstractTest;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -64,6 +65,17 @@ public class PostsTest implements IAbstractTest {
         api.getProperties().setProperty("id", String.valueOf(post.getId()));
         api.callAPIExpectSuccess();
         api.validateResponse();
+    }
+
+    @Test
+    public void testDeletePostWithOutToken() {
+        Post post = createPost();
+
+        DeletePostMethod api = new DeletePostMethod();
+        api.getProperties().setProperty("id", String.valueOf(post.getId()));
+        api.removeAuthorizationHeader();
+        String response = api.callAPIExpectSuccess().asString();
+        Assert.assertEquals(DeletePostMethod.getErrorMessage(response), "You need to authenticate your self to perform this action");
     }
 
     @Test
