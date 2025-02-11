@@ -1,0 +1,3 @@
+{
+  "query": "{ allPeople{ people{ name birthYear gender hairColor height}}}"
+}

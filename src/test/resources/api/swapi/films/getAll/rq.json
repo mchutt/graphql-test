@@ -1,0 +1,3 @@
+{
+  "query": "{ allFilms { films { title episodeID openingCrawl releaseDate director producers } }}"
+}

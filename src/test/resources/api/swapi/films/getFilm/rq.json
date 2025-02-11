@@ -1,0 +1,6 @@
+{
+  "query": "query getFilm($id:ID) { film(id:$id){ title } }",
+  "variables": {
+    "id": "${id}"
+  }
+}
