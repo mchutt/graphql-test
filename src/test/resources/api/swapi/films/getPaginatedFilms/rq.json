@@ -1,0 +1,7 @@
+{
+  "query": "query GetFilms($first: Int!<#if after??>, $after: String</#if>) { allFilms(first: $first<#if after??>, after: $after</#if>) { pageInfo { hasNextPage hasPreviousPage startCursor endCursor } edges { node { title } } } }",
+  "variables": {
+    <#if after??>"after": "${after}",</#if>
+    "first": ${first}
+}
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "allFilms": {
+          "type": "object",
+          "properties": {
+            "pageInfo": {
+              "type": "object",
+              "properties": {
+                "hasNextPage": {
+                  "type": "boolean"
+                },
+                "hasPreviousPage": {
+                  "type": "boolean"
+                },
+                "startCursor": {
+                  "type": "string"
+                },
+                "endCursor": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "hasNextPage",
+                "hasPreviousPage",
+                "startCursor",
+                "endCursor"
+              ]
+            },
+            "edges": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "node": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "title"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "node"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "pageInfo",
+            "edges"
+          ]
+        }
+      },
+      "required": [
+        "allFilms"
+      ]
+    }
+  },
+  "required": [
+    "data"
+  ]
+}
