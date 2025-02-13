@@ -1,0 +1,7 @@
+{
+  "query": "query GetPeople($last: Int!, $before: String) {allPeople(last: $last, before: $before) {pageInfo { hasNextPage hasPreviousPage startCursor endCursor } edges { node { name } } } }",
+  "variables": {
+    "last": ${last},
+    "before": "${before}"
+  }
+}

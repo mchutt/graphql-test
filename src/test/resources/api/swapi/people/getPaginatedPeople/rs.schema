@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "allPeople": {
+          "type": "object",
+          "properties": {
+            "pageInfo": {
+              "type": "object",
+              "properties": {
+                "hasNextPage": {
+                  "type": "boolean"
+                },
+                "endCursor": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "hasNextPage",
+                "endCursor"
+              ]
+            },
+            "edges": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "node": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "node"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "pageInfo",
+            "edges"
+          ]
+        }
+      },
+      "required": [
+        "allPeople"
+      ]
+    }
+  },
+  "required": [
+    "data"
+  ]
+}

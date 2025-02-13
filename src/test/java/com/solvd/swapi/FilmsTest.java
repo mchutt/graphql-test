@@ -32,19 +32,27 @@ public class FilmsTest implements IAbstractTest {
         sa.assertAll();
     }
 
-    @Test
-    public void testGetFilmById() {
+    @DataProvider(name = "getFilmByIdData", parallel = true)
+    public Object[][] getFilmByIdData() {
+        return new Object[][]{
+                {"ZmlsbXM6Mw==", "Return of the Jedi"},
+                {"", ""}
+        };
+    }
+
+    @Test(dataProvider = "getFilmByIdData")
+    public void testGetFilmById(String filmId, String filmTitle) {
         GetFilmByIdMethod api = new GetFilmByIdMethod();
-        api.setId("ZmlsbXM6Mw==");
+        api.setId(filmId);
         Response response = api.callAPIExpectSuccess();
-        String filmTitle = api.getFilmTitle(response);
-        Assert.assertEquals(filmTitle, "Return of the Jedi", "Film name does not match");
+        String title = api.getFilmTitle(response);
+        Assert.assertEquals(title, filmTitle, "Film name does not match");
     }
 
     @DataProvider(name = "paginationData", parallel = true)
-    public Object[][] paginationData(){
-        return new Object[][] {
-                {2, 4},
+    public Object[][] paginationData() {
+        return new Object[][]{
+                {2, 4}, // test different combinations
                 {5, 2}
         };
     }

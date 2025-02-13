@@ -1,16 +1,17 @@
 package com.solvd.swapi;
 
-import com.solvd.swapi.people.GetAllPeopleMethod;
-import com.solvd.swapi.people.GetInvalidFieldMethod;
-import com.solvd.swapi.people.GetPersonByIdMethod;
-import com.solvd.swapi.people.Person;
+import com.solvd.swapi.people.*;
+import com.zebrunner.carina.api.APIMethodPoller;
 import com.zebrunner.carina.core.IAbstractTest;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.solvd.swapi.people.GetAllPeopleMethod.getPersonList;
 import static com.solvd.swapi.people.GetPersonByIdMethod.getPerson;
@@ -51,6 +52,45 @@ public class PeopleTest implements IAbstractTest {
         Assert.assertNotNull(errorMessage);
     }
 
+    @DataProvider(name = "testPaginationData")
+    public Object[][] testPaginationData(){
+        return new Object[][] {
+                {true, 40, 3},
+                {false, 40, 3}
+        };
+    }
 
+    @Test(dataProvider = "testPaginationData")
+    public void testFilmPagination(boolean forward, int pageSize, int expectedPages) {
+        GetPaginatedPeopleMethod api = new GetPaginatedPeopleMethod();
+        AtomicInteger pageCount = new AtomicInteger(0);
+
+        if (forward) {
+            api.setFirst(pageSize);
+            api.setPaginationDirection(true);
+            api.setAfter("");
+        } else {
+            api.setPaginationDirection(false);
+            api.setLast(pageSize);
+            api.setBefore("");
+        }
+
+        api.callAPIWithRetry()
+                .peek(response -> {
+                    pageCount.getAndIncrement();
+                    if (forward) {
+                        api.setAfter(api.getEndCursor(response));
+                    } else {
+                        api.setBefore(api.getStartCursor(response));
+                    }
+                })
+                .until(response -> forward ? !api.hasNextPage(response) : !api.hasPreviousPage(response))
+                .withLogStrategy(APIMethodPoller.LogStrategy.ALL)
+                .stopAfter(30, ChronoUnit.SECONDS)
+                .execute();
+
+        Assert.assertEquals(pageCount.get(), expectedPages, "Page count does not match expected");
+        api.validateResponseAgainstSchema("api/swapi/people/getPaginatedPeople/rs.schema");
+    }
 
 }

@@ -17,7 +17,8 @@ public class GetFilmByIdMethod extends AbstractApiMethodV2 {
         getProperties().setProperty("id", id);
     }
 
-    public String getFilmTitle(Response response){
-        return response.jsonPath().getString("data.film.title");
+    public String getFilmTitle(Response response) {
+        String value = response.jsonPath().getString("data.film.title");
+        return value != null ? value : "";
     }
 }
