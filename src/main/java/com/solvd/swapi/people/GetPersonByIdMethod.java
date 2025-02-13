@@ -1,5 +1,6 @@
 package com.solvd.swapi.people;
 
+import com.solvd.swapi.models.Person;
 import com.zebrunner.carina.api.AbstractApiMethodV2;
 import com.zebrunner.carina.api.annotation.Endpoint;
 import com.zebrunner.carina.api.annotation.RequestTemplatePath;

@@ -1,5 +1,6 @@
 package com.solvd.swapi;
 
+import com.solvd.swapi.models.Person;
 import com.solvd.swapi.people.*;
 import com.zebrunner.carina.api.APIMethodPoller;
 import com.zebrunner.carina.core.IAbstractTest;

@@ -1,4 +1,4 @@
-package com.solvd.swapi.films;
+package com.solvd.swapi.models;
 
 import java.util.List;
 

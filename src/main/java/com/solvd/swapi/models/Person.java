@@ -1,4 +1,4 @@
-package com.solvd.swapi.people;
+package com.solvd.swapi.models;
 
 public class Person {
     private String Id;

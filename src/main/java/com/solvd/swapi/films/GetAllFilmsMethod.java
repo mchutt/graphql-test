@@ -1,5 +1,6 @@
 package com.solvd.swapi.films;
 
+import com.solvd.swapi.models.Film;
 import com.zebrunner.carina.api.AbstractApiMethodV2;
 import com.zebrunner.carina.api.annotation.Endpoint;
 import com.zebrunner.carina.api.annotation.RequestTemplatePath;

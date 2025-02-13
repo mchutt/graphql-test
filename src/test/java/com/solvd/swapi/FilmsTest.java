@@ -1,6 +1,6 @@
 package com.solvd.swapi;
 
-import com.solvd.swapi.films.Film;
+import com.solvd.swapi.models.Film;
 import com.solvd.swapi.films.GetAllFilmsMethod;
 import com.solvd.swapi.films.GetFilmByIdMethod;
 import com.solvd.swapi.films.GetPaginatedFilmsMethod;
