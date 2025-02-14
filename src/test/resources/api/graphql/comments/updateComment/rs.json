@@ -1,0 +1,13 @@
+{
+    "data": {
+        "updateComment": {
+            "comment": {
+                "id": ${id},
+                "postId": "<#if postId??>${postId}<#else>type:Integer</#if>",
+                "body": "<#if body??>${body}<#else>type:String</#if>",
+                "email": "<#if email??>${email}<#else>type:String</#if>",
+                "name": "<#if name??>${name}<#else>type:String</#if>"
+            }
+        }
+    }
+}

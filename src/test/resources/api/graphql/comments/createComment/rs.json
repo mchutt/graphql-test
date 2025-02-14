@@ -1,0 +1,12 @@
+{
+  "data": {
+    "createComment": {
+      "comment": {
+        "id": "type:Integer",
+        "name": "comment name",
+        "email": "email@mail.com",
+        "postId": ${postId}
+      }
+    }
+  }
+}

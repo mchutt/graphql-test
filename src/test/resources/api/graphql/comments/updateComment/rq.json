@@ -1,0 +1,12 @@
+{
+  "query": "mutation UpdateComment($input: updateCommentInput!) { updateComment(input: $input) { comment { body email id name postId } } }",
+  "variables": {
+    "input": {
+      "id": ${id}
+      <#if name??>, "name": "${name}"</#if>
+      <#if body??>, "body": "${body}"</#if>
+      <#if email??>, "email": "${email}"</#if>
+    }
+  }
+}
+

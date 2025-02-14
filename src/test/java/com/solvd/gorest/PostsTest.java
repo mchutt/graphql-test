@@ -3,16 +3,22 @@ package com.solvd.gorest;
 import com.solvd.gorest.models.Post;
 import com.solvd.gorest.models.User;
 import com.solvd.gorest.posts.*;
+import com.solvd.gorest.services.ApiService;
 import com.zebrunner.carina.core.IAbstractTest;
-import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static com.solvd.gorest.UsersTest.createUser;
+import static com.solvd.gorest.utils.APIConstants.RESOURCES_PATH;
 
 public class PostsTest implements IAbstractTest {
-    private static final String RESOURCES_PATH = "api/graphql/posts/";
+    private static ApiService apiService;
+
+    @BeforeClass
+    public void setApiService() {
+        apiService = new ApiService();
+    }
 
     @DataProvider(name = "createPostData")
     public Object[][] createPostData() {
@@ -24,12 +30,12 @@ public class PostsTest implements IAbstractTest {
 
     @Test(dataProvider = "createPostData")
     public void testCreatePost(boolean isAuthorized) {
-        User user = createUser();
+        User user = apiService.createUser();
         CreatePostMethod api = new CreatePostMethod();
         api.getProperties().setProperty("userId", user.getId());
         if (!isAuthorized) {
             api.removeAuthorizationHeader();
-            api.setResponseTemplate(RESOURCES_PATH + "createPost/rs-non-authorized.json");
+            api.setResponseTemplate(RESOURCES_PATH + "posts/createPost/rs-non-authorized.json");
         }
         api.callAPIExpectSuccess();
         api.validateResponse();
@@ -37,7 +43,7 @@ public class PostsTest implements IAbstractTest {
 
     @Test
     public void testGetPostById() {
-        Post post = createPost();
+        Post post = apiService.createPost();
 
         GetPostByIdMethod api = new GetPostByIdMethod();
         api.getProperties().setProperty("id", String.valueOf(post.getId()));
@@ -49,7 +55,7 @@ public class PostsTest implements IAbstractTest {
 
     @Test
     public void testUpdatePost() {
-        Post post = createPost();
+        Post post = apiService.createPost();
 
         UpdatePostMethod api = new UpdatePostMethod();
         api.getProperties().setProperty("id", String.valueOf(post.getId()));
@@ -59,7 +65,7 @@ public class PostsTest implements IAbstractTest {
 
     @Test
     public void testDeletePost() {
-        Post post = createPost();
+        Post post = apiService.createPost();
 
         DeletePostMethod api = new DeletePostMethod();
         api.getProperties().setProperty("id", String.valueOf(post.getId()));
@@ -69,7 +75,7 @@ public class PostsTest implements IAbstractTest {
 
     @Test
     public void testDeletePostWithOutToken() {
-        Post post = createPost();
+        Post post = apiService.createPost();
 
         DeletePostMethod api = new DeletePostMethod();
         api.getProperties().setProperty("id", String.valueOf(post.getId()));
@@ -82,17 +88,7 @@ public class PostsTest implements IAbstractTest {
     public void testGetAllPosts() {
         GetAllPostsMethod api = new GetAllPostsMethod();
         api.callAPIExpectSuccess();
-        api.validateResponseAgainstSchema(RESOURCES_PATH + "getAll/rs.schema");
-    }
-
-    //helper methods
-    private Post createPost() {
-        User user = createUser();
-        CreatePostMethod api = new CreatePostMethod();
-        api.getProperties().setProperty("userId", user.getId());
-        Response response = api.callAPIExpectSuccess();
-        api.validateResponse();
-        return response.jsonPath().getObject("data.createPost.post", Post.class);
+        api.validateResponseAgainstSchema(RESOURCES_PATH + "posts/getAll/rs.schema");
     }
 
 }

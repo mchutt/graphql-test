@@ -6,6 +6,7 @@
             <class name="com.solvd.gorest.PostsTest" />
             <class name="com.solvd.gorest.UsersTest" />
             <class name="com.solvd.gorest.TodosTest" />
+            <class name="com.solvd.gorest.CommentsTest" />
         </classes>
     </test>
 

@@ -1,0 +1,6 @@
+{
+    "query": "query Comment($id: ID!) { comment(id: $id) { body email id name postId } }",
+    "variables": {
+        "id": ${id}
+    }
+}

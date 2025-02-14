@@ -1,0 +1,8 @@
+{
+    "query": "mutation DeleteComment($input: deleteCommentInput!) { deleteComment(input: $input) { clientMutationId } }",
+    "variables": {
+        "input": {
+            "id": ${id}
+        }
+    }
+}

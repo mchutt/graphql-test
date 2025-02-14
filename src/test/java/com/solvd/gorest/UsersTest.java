@@ -2,27 +2,33 @@ package com.solvd.gorest;
 
 import com.solvd.gorest.dtos.UserDTO;
 import com.solvd.gorest.models.User;
+import com.solvd.gorest.services.ApiService;
 import com.solvd.gorest.users.*;
 import com.zebrunner.carina.core.IAbstractTest;
-import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static com.solvd.gorest.users.CreateUserMethod.*;
+import static com.solvd.gorest.utils.APIConstants.RESOURCES_PATH;
 
 public class UsersTest implements IAbstractTest {
+    private static ApiService apiService;
 
-    private static final String RESOURCES_PATH = "api/graphql/users/";
+    @BeforeClass
+    public void setApiService() {
+        apiService = new ApiService();
+    }
 
     @Test
     public void testCreateUser() {
-        createUser();
+        apiService.createUser();
     }
 
     @Test
     public void testGetUserById() {
-        User user = createUser();
+        User user = apiService.createUser();
 
         GetUserByIdMethod api = new GetUserByIdMethod();
         api.getProperties().setProperty("id", user.getId());
@@ -34,7 +40,7 @@ public class UsersTest implements IAbstractTest {
 
     @Test
     public void testUpdateUser() {
-        User user = createUser();
+        User user = apiService.createUser();
 
         UpdateUserMethod api = new UpdateUserMethod();
         api.getProperties().setProperty("id", user.getId());
@@ -44,24 +50,24 @@ public class UsersTest implements IAbstractTest {
 
     @DataProvider(name = "deleteUserData")
     public Object[][] deleteUserData() {
-        User user = createUser();
+        User user = apiService.createUser();
 
         return new Object[][]{
-                {user.getId(), "deleteUser/rs.json"},
-                {"1", "deleteUser/rs-nonexistent.json"},
+                {user.getId(), "users/deleteUser/rs.json"},
+                {"1", "users/deleteUser/rs-nonexistent.json"},
         };
     }
 
     @Test(dataProvider = "deleteUserData")
     public void testDeleteUser(String userId, String responseTemplatePath) {
-        deleteUser(userId, responseTemplatePath);
+        apiService.deleteUser(userId, RESOURCES_PATH + responseTemplatePath);
     }
 
     @Test
     public void testGetAllUsers() {
         GetAllUsersMethod api = new GetAllUsersMethod();
         api.callAPIExpectSuccess();
-        api.validateResponseAgainstSchema(RESOURCES_PATH + "getAll/rs.schema");
+        api.validateResponseAgainstSchema(RESOURCES_PATH + "users/getAll/rs.schema");
     }
 
     @DataProvider(name = "invalidUserData")
@@ -80,26 +86,5 @@ public class UsersTest implements IAbstractTest {
         String response = api.callAPIExpectSuccess().asString();
         Assert.assertEquals(getFieldName(response), expectedFieldName, "FieldName does not match expected.");
         Assert.assertEquals(getMessage(response), expectedMessage, "Error message does not match expected.");
-    }
-
-    //helper methods
-    static public User createUser() {
-        CreateUserMethod api = new CreateUserMethod();
-        Response response = api.callAPIExpectSuccess();
-        api.validateResponseAgainstSchema(RESOURCES_PATH + "createUser/rs.schema");
-        return response.jsonPath().getObject("data.createUser.user", User.class);
-    }
-
-    public static void deleteUser(String userId) {
-        deleteUser(userId, null);
-    }
-
-    public static void deleteUser(String userId, String responseTemplatePath) {
-        DeleteUserMethod api = new DeleteUserMethod();
-        api.getProperties().setProperty("id", userId);
-        if (responseTemplatePath != null)
-            api.setResponseTemplate(RESOURCES_PATH + responseTemplatePath);
-        api.callAPIExpectSuccess();
-        api.validateResponse();
     }
 }

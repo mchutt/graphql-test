@@ -1,4 +1,4 @@
-package com.solvd.gorest.todos;
+package com.solvd.gorest.comments;
 
 import com.solvd.gorest.AuthorizedApiMethod;
 import com.zebrunner.carina.api.annotation.Endpoint;
@@ -9,11 +9,13 @@ import com.zebrunner.carina.api.http.HttpMethodType;
 import com.zebrunner.carina.api.http.HttpResponseStatusType;
 
 @Endpoint(url = "${config.env.api_url}", methodType = HttpMethodType.POST)
-@RequestTemplatePath(path = "api/graphql/todos/deleteTodo/rq.json")
-@ResponseTemplatePath(path = "api/graphql/todos/deleteTodo/rs.json")
+@RequestTemplatePath(path = "api/graphql/comments/getComment/rq.json")
+@ResponseTemplatePath(path = "api/graphql/comments/getComment/rs.json")
 @SuccessfulHttpStatus(status = HttpResponseStatusType.OK_200)
-public class DeleteTodoMethod extends AuthorizedApiMethod {
-    public void setIdProperty(String id) {
-        getProperties().setProperty("id", id);
+public class GetCommentByIdMethod extends AuthorizedApiMethod {
+
+    public void setId(int id){
+        getProperties().setProperty("id", String.valueOf(id));
     }
+
 }

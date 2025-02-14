@@ -1,27 +1,31 @@
 package com.solvd.gorest;
 
 import com.solvd.gorest.models.Todo;
-import com.solvd.gorest.models.User;
+import com.solvd.gorest.services.ApiService;
 import com.solvd.gorest.todos.*;
 import com.zebrunner.carina.core.IAbstractTest;
-import io.restassured.response.Response;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.Properties;
 
-import static com.solvd.gorest.UsersTest.createUser;
-
 public class TodosTest implements IAbstractTest {
+    private static ApiService apiService;
+
+    @BeforeClass
+    public void setApiService() {
+        apiService = new ApiService();
+    }
 
     @Test
     public void testCreateTodo() {
-        createTodo();
+        apiService.createTodo();
     }
 
     @Test
     public void testGetTodoById() {
-        Todo todo = createTodo();
+        Todo todo = apiService.createTodo();
 
         GetTodoByIdMethod api = new GetTodoByIdMethod();
         api.getProperties().setProperty("id", String.valueOf(todo.getId()));
@@ -46,10 +50,11 @@ public class TodosTest implements IAbstractTest {
 
     @Test(dataProvider = "updateTodoData")
     public void testUpdateTodo(Properties props) {
-        Todo todo = createTodo();
+        Todo todo = apiService.createTodo();
 
         UpdateTodoMethod api = new UpdateTodoMethod();
         props.setProperty("id", String.valueOf(todo.getId()));
+        props.setProperty("userId", String.valueOf(todo.getUserId()));
         api.setProperties(props);
         api.callAPIExpectSuccess();
         api.validateResponse();
@@ -57,10 +62,10 @@ public class TodosTest implements IAbstractTest {
 
     @Test
     public void testDeleteTodo() {
-        Todo todo = createTodo();
+        Todo todo = apiService.createTodo();
 
         DeleteTodoMethod api = new DeleteTodoMethod();
-        api.getProperties().setProperty("id", String.valueOf(todo.getId()));
+        api.setIdProperty(String.valueOf(todo.getId()));
         api.callAPIExpectSuccess();
         api.validateResponse();
     }
@@ -70,16 +75,5 @@ public class TodosTest implements IAbstractTest {
         GetAllTodosMethod api = new GetAllTodosMethod();
         api.callAPIExpectSuccess();
         api.validateResponseAgainstSchema("api/graphql/todos/getAll/rs.schema");
-    }
-
-    //helper methods
-    private Todo createTodo() {
-        User user = createUser();
-        CreateTodoMethod api = new CreateTodoMethod();
-        api.getProperties().setProperty("userId", user.getId());
-        Response response = api.callAPIExpectSuccess();
-        api.validateResponse();
-        return response.jsonPath().getObject("data.createTodo.todo", Todo.class);
-
     }
 }

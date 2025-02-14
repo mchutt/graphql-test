@@ -1,0 +1,11 @@
+{
+  "query": "mutation CreateComment($input: createCommentInput!) { createComment(input: $input) { comment { id name email postId } } }",
+  "variables": {
+    "input": {
+      "postId": ${postId},
+      "name": "comment name",
+      "email": "email@mail.com",
+      "body": "the body"
+    }
+  }
+}
