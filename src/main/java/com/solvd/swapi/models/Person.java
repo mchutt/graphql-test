@@ -4,20 +4,34 @@ public class Person {
     private String Id;
     private String name;
     private String birthYear;
+    private String eyeColor;
     private String gender;
     private String hairColor;
     private int height;
+    private int mass;
+    private String skinColor;
+    private Planet homeworld;
+    private FilmConnection filmConnection;
+    private Species species;
+    private StarshipConnection starshipConnection;
 
-    public Person(String id, String name, String birthYear, String gender, String hairColor, int height) {
+    public Person() {
+    }
+
+    public Person(String id, String name, String birthYear, String eyeColor, String gender, String hairColor, int height, int mass, String skinColor, Planet homeworld, FilmConnection filmConnection, Species species, StarshipConnection starshipConnection) {
         Id = id;
         this.name = name;
         this.birthYear = birthYear;
+        this.eyeColor = eyeColor;
         this.gender = gender;
         this.hairColor = hairColor;
         this.height = height;
-    }
-
-    public Person() {
+        this.mass = mass;
+        this.skinColor = skinColor;
+        this.homeworld = homeworld;
+        this.filmConnection = filmConnection;
+        this.species = species;
+        this.starshipConnection = starshipConnection;
     }
 
     public String getId() {
@@ -44,6 +58,14 @@ public class Person {
         this.birthYear = birthYear;
     }
 
+    public String getEyeColor() {
+        return eyeColor;
+    }
+
+    public void setEyeColor(String eyeColor) {
+        this.eyeColor = eyeColor;
+    }
+
     public String getGender() {
         return gender;
     }
@@ -68,15 +90,51 @@ public class Person {
         this.height = height;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "Id='" + Id + '\'' +
-                ", name='" + name + '\'' +
-                ", birthYear='" + birthYear + '\'' +
-                ", gender='" + gender + '\'' +
-                ", hairColor='" + hairColor + '\'' +
-                ", height=" + height +
-                '}';
+    public int getMass() {
+        return mass;
+    }
+
+    public void setMass(int mass) {
+        this.mass = mass;
+    }
+
+    public String getSkinColor() {
+        return skinColor;
+    }
+
+    public void setSkinColor(String skinColor) {
+        this.skinColor = skinColor;
+    }
+
+    public void setHomeworld(Planet homeworld) {
+        this.homeworld = homeworld;
+    }
+
+    public Planet getHomeworld() {
+        return homeworld;
+    }
+
+    public FilmConnection getFilmConnection() {
+        return filmConnection;
+    }
+
+    public void setFilmConnection(FilmConnection filmConnection) {
+        this.filmConnection = filmConnection;
+    }
+
+    public Species getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(Species species) {
+        this.species = species;
+    }
+
+    public StarshipConnection getStarshipConnection() {
+        return starshipConnection;
+    }
+
+    public void setStarshipConnection(StarshipConnection starshipConnection) {
+        this.starshipConnection = starshipConnection;
     }
 }

@@ -3,6 +3,7 @@ package com.solvd.swapi.models;
 import java.util.List;
 
 public class Film {
+    private String id;
     private String title;
     private int episodeID;
     private String openingCrawl;
@@ -10,7 +11,8 @@ public class Film {
     private String director;
     private List<String> producers;
 
-    public Film(String title, int episodeID, String openingCrawl, String releaseDate, String director, List<String> producers) {
+    public Film(String id, String title, int episodeID, String openingCrawl, String releaseDate, String director, List<String> producers) {
+        this.id = id;
         this.title = title;
         this.episodeID = episodeID;
         this.openingCrawl = openingCrawl;
@@ -20,6 +22,14 @@ public class Film {
     }
 
     public Film() {}
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -72,7 +82,8 @@ public class Film {
     @Override
     public String toString() {
         return "Film{" +
-                "title='" + title + '\'' +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
                 ", episodeID=" + episodeID +
                 ", openingCrawl='" + openingCrawl + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +

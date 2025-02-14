@@ -12,7 +12,7 @@ import io.restassured.response.Response;
 public class GetPaginatedPeopleMethod extends AbstractPaginatedAPIMethod {
 
 
-    public void setPaginationDirection(boolean isForward){
+    public void setRequestTemplateBasedOnPaginationDirection(boolean isForward){
         if (isForward){
             setRequestTemplate("api/swapi/people/getPaginatedPeople/rq-forward.json");
         }else {

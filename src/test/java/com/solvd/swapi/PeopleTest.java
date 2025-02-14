@@ -15,12 +15,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.solvd.swapi.people.GetAllPeopleMethod.getPersonList;
-import static com.solvd.swapi.people.GetPersonByIdMethod.getPerson;
 
 
 public class PeopleTest implements IAbstractTest {
-
-    public static final String LUKE_ID = "cGVvcGxlOjE=";
 
     @Test
     public void testGetAllPeople() {
@@ -36,13 +33,27 @@ public class PeopleTest implements IAbstractTest {
         softAssert.assertAll();
     }
 
-    @Test
-    public void testGetPersonById() {
+    @DataProvider(name = "personIdDataProvider", parallel = true)
+    public Object[][] personIdDataProvider(){
+        return new Object[][]{
+                {"cGVvcGxlOjE=", "Luke Skywalker", true},
+                {"cGVvcGxlOjM=", "R2-D2", true},
+                {"", "", false}
+        };
+    }
+
+    @Test(dataProvider = "personIdDataProvider")
+    public void testGetPersonById(String personId, String personName, boolean positive) {
         GetPersonByIdMethod api = new GetPersonByIdMethod();
-        api.setId(LUKE_ID);
+        api.setId(personId);
         Response response = api.callAPIExpectSuccess();
-        Person person = getPerson(response);
-        Assert.assertEquals(person.getName(), "Luke Skywalker", "Person name does not match");
+        Person person = api.getPerson(response);
+        if (positive) {
+            Assert.assertEquals(person.getName(), personName, "Person name does not match");
+        }else {
+            Assert.assertNotNull(api.getErrorMessage(response));
+            Assert.assertNull(person, "Person should be null");
+        }
     }
 
     @Test
@@ -68,10 +79,10 @@ public class PeopleTest implements IAbstractTest {
 
         if (forward) {
             api.setFirst(pageSize);
-            api.setPaginationDirection(true);
+            api.setRequestTemplateBasedOnPaginationDirection(true);
             api.setAfter("");
         } else {
-            api.setPaginationDirection(false);
+            api.setRequestTemplateBasedOnPaginationDirection(false);
             api.setLast(pageSize);
             api.setBefore("");
         }

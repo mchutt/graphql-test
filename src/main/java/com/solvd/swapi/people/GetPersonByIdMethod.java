@@ -19,7 +19,11 @@ public class GetPersonByIdMethod extends AbstractApiMethodV2 {
         getProperties().setProperty("id", id);
     }
 
-    public static Person getPerson(Response response) {
+    public Person getPerson(Response response) {
         return response.jsonPath().getObject(JSON_PATH, Person.class);
+    }
+
+    public String getErrorMessage(Response response) {
+        return response.jsonPath().getString("errors[0].message");
     }
 }

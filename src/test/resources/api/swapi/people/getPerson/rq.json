@@ -1,5 +1,5 @@
 {
-  "query": "query getUserById($id:ID!){ person(id: $id){ name }}",
+  "query": "query GetPerson($id: ID!) { person(id: $id) { id name birthYear eyeColor gender hairColor height mass skinColor homeworld { name } filmConnection { films { id title episodeID } } species { name } starshipConnection { starships { name model consumables } } } }",
   "variables": {
     "id": "${id}"
   }
