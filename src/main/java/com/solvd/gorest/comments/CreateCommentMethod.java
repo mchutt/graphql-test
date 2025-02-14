@@ -14,4 +14,8 @@ public class CreateCommentMethod extends AuthorizedApiMethod {
     public void setPostId(int postId){
         getProperties().setProperty("postId", String.valueOf(postId));
     }
+
+    public void setEmail(String email){
+        getProperties().setProperty("email", email);
+    }
 }

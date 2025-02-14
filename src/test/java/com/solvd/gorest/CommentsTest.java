@@ -15,6 +15,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static com.solvd.gorest.utils.APIConstants.NOT_AUTHENTICATED_MESSAGE;
+import static com.solvd.gorest.utils.APIConstants.RESOURCES_PATH;
 
 public class CommentsTest extends AbstractTest {
     private static ApiService apiService;
@@ -50,7 +51,19 @@ public class CommentsTest extends AbstractTest {
     }
 
     @Test
-    public void testUpdateComment(){
+    public void testCreateCommentWithInvalidEmail() {
+        Post post = apiService.createPost();
+
+        CreateCommentMethod api = new CreateCommentMethod();
+        api.setPostId(post.getId());
+        api.setEmail("invalid email");
+        api.callAPIExpectSuccess();
+        api.setResponseTemplate(RESOURCES_PATH + "comments/createComment/rs-invalid-email.json");
+        api.validateResponse();
+    }
+
+    @Test
+    public void testUpdateComment() {
         Comment comment = apiService.createComment();
 
         UpdateCommentMethod api = new UpdateCommentMethod();
@@ -63,7 +76,7 @@ public class CommentsTest extends AbstractTest {
     }
 
     @Test
-    public void testGetCommentById(){
+    public void testGetCommentById() {
         Comment comment = apiService.createComment();
 
         GetCommentByIdMethod api = new GetCommentByIdMethod();
@@ -73,7 +86,7 @@ public class CommentsTest extends AbstractTest {
     }
 
     @Test
-    public void testDeleteComment(){
+    public void testDeleteComment() {
         Comment comment = apiService.createComment();
 
         DeleteCommentMethod api = new DeleteCommentMethod();

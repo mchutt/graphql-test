@@ -4,7 +4,7 @@
       "comment": {
         "id": "type:Integer",
         "name": "comment name",
-        "email": "email@mail.com",
+        "email": "<#if email??>${email}<#else>email@mail.com</#if>",
         "postId": ${postId}
       }
     }

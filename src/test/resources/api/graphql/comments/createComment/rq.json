@@ -4,7 +4,7 @@
     "input": {
       "postId": ${postId},
       "name": "comment name",
-      "email": "email@mail.com",
+      "email": "<#if email??>${email}<#else>email@mail.com</#if>",
       "body": "the body"
     }
   }
