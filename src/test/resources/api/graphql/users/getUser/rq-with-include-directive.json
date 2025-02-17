@@ -1,0 +1,7 @@
+{
+  "query": "query User($userId: ID!, $withName: Boolean!) { user(id: $userId) { name @include(if: $withName) email gender id status } }",
+  "variables": {
+    "userId": ${id},
+    "withName": ${withName}
+  }
+}

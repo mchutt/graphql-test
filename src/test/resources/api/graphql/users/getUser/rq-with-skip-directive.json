@@ -1,0 +1,7 @@
+{
+  "query": "query User($userId: ID!, $skipName: Boolean!) { user(id: $userId) { name @skip(if: $skipName) email gender id status } }",
+  "variables": {
+    "userId": ${id},
+    "skipName": ${skipName}
+  }
+}

@@ -10,10 +10,15 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.solvd.gorest.users.CreateUserMethod.*;
 import static com.solvd.gorest.utils.APIConstants.RESOURCES_PATH;
 
 public class UsersTest implements IAbstractTest {
+    private static final String RQ_INCLUDE_DIRECTIVE = RESOURCES_PATH + "users/getUser/rq-with-include-directive.json";
+    private static final String RQ_SKIP_DIRECTIVE = RESOURCES_PATH + "users/getUser/rq-with-skip-directive.json";
     private static ApiService apiService;
 
     @BeforeClass
@@ -26,14 +31,45 @@ public class UsersTest implements IAbstractTest {
         apiService.createUser();
     }
 
-    @Test
-    public void testGetUserById() {
+    @DataProvider(parallel = true)
+    public Object[][] getUserByIdData(){
         User user = apiService.createUser();
 
+        Map<String, String> userProperties = new HashMap<>();
+        userProperties.put("id", user.getId());
+        userProperties.put("name", user.getName());
+        userProperties.put("email", user.getEmail());
+
+        Map<String, String> propWithIncludeDirectiveToFalse = new HashMap<>(userProperties);
+        propWithIncludeDirectiveToFalse.remove("name");
+        propWithIncludeDirectiveToFalse.put("withName", "false");
+
+        Map<String, String> propWithIncludeDirectiveToTrue = new HashMap<>(userProperties);
+        propWithIncludeDirectiveToTrue.put("withName", "true");
+
+        Map<String, String> propWithSkipDirectiveToTrue = new HashMap<>(userProperties);
+        propWithSkipDirectiveToTrue.remove("name");
+        propWithSkipDirectiveToTrue.put("skipName", "true");
+
+        Map<String, String> propWithSkipDirectiveToFalse = new HashMap<>(userProperties);
+        propWithSkipDirectiveToFalse.put("skipName", "false");
+
+        return new Object[][] {
+                {"", userProperties},
+                {RQ_INCLUDE_DIRECTIVE, propWithIncludeDirectiveToFalse},
+                {RQ_INCLUDE_DIRECTIVE, propWithIncludeDirectiveToTrue},
+                {RQ_SKIP_DIRECTIVE, propWithSkipDirectiveToTrue},
+                {RQ_SKIP_DIRECTIVE, propWithSkipDirectiveToFalse},
+        };
+    }
+
+    @Test(dataProvider = "getUserByIdData")
+    public void testGetUserById(String requestTemplatePath, Map<String, String> props) {
         GetUserByIdMethod api = new GetUserByIdMethod();
-        api.getProperties().setProperty("id", user.getId());
-        api.getProperties().setProperty("email", user.getEmail());
-        api.getProperties().setProperty("name", user.getName());
+        if (!requestTemplatePath.isBlank()){
+            api.setRequestTemplate(requestTemplatePath);
+        }
+        api.addProperties(props);
         api.callAPIExpectSuccess();
         api.validateResponse();
     }
