@@ -1,6 +1,7 @@
 package com.solvd.gorest.comments;
 
 import com.solvd.gorest.AuthorizedApiMethod;
+import com.solvd.gorest.utils.IResponseMethods;
 import com.zebrunner.carina.api.annotation.Endpoint;
 import com.zebrunner.carina.api.annotation.RequestTemplatePath;
 import com.zebrunner.carina.api.annotation.ResponseTemplatePath;
@@ -12,7 +13,7 @@ import com.zebrunner.carina.api.http.HttpResponseStatusType;
 @RequestTemplatePath(path = "api/graphql/comments/getComment/rq.json")
 @ResponseTemplatePath(path = "api/graphql/comments/getComment/rs.json")
 @SuccessfulHttpStatus(status = HttpResponseStatusType.OK_200)
-public class GetCommentByIdMethod extends AuthorizedApiMethod {
+public class GetCommentByIdMethod extends AuthorizedApiMethod implements IResponseMethods {
 
     public void setId(int id){
         getProperties().setProperty("id", String.valueOf(id));

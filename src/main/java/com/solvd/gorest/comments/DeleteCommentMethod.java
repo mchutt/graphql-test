@@ -1,6 +1,7 @@
 package com.solvd.gorest.comments;
 
 import com.solvd.gorest.AuthorizedApiMethod;
+import com.solvd.gorest.utils.IResponseMethods;
 import com.zebrunner.carina.api.annotation.Endpoint;
 import com.zebrunner.carina.api.annotation.RequestTemplatePath;
 import com.zebrunner.carina.api.annotation.ResponseTemplatePath;
@@ -12,7 +13,7 @@ import com.zebrunner.carina.api.http.HttpResponseStatusType;
 @RequestTemplatePath(path = "api/graphql/comments/deleteComment/rq.json")
 @ResponseTemplatePath(path = "api/graphql/comments/deleteComment/rs.json")
 @SuccessfulHttpStatus(status = HttpResponseStatusType.OK_200)
-public class DeleteCommentMethod extends AuthorizedApiMethod {
+public class DeleteCommentMethod extends AuthorizedApiMethod implements IResponseMethods {
     public void setId(int id) {
         getProperties().setProperty("id", String.valueOf(id));
     }

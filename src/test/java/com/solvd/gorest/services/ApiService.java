@@ -9,8 +9,12 @@ import com.solvd.gorest.posts.CreatePostMethod;
 import com.solvd.gorest.todos.CreateTodoMethod;
 import com.solvd.gorest.users.CreateUserMethod;
 import com.solvd.gorest.users.DeleteUserMethod;
+import com.solvd.gorest.utils.IResponseMethods;
+import com.zebrunner.carina.api.AbstractApiMethodV2;
 import io.restassured.response.Response;
+import org.testng.Assert;
 
+import static com.solvd.gorest.utils.APIConstants.NOT_FOUND;
 import static com.solvd.gorest.utils.APIConstants.RESOURCES_PATH;
 
 public class ApiService {
@@ -60,5 +64,17 @@ public class ApiService {
         Response response = api.callAPIExpectSuccess();
         api.validateResponse();
         return response.jsonPath().getObject("data.createComment.comment", Comment.class);
+    }
+
+
+    /**
+     * @param api
+     * validates that calling the api with a non-existent id returns a 'Resource not found!' message
+     */
+    public void validateThatNonExistentResourceReturnsNotFound(AbstractApiMethodV2 api) {
+        api.getProperties().setProperty("id", "1231233123");
+        String response = api.callAPIExpectSuccess().asString();
+        String errorMessage = ((IResponseMethods) api).getErrorMessage(response);
+        Assert.assertEquals(errorMessage, NOT_FOUND);
     }
 }

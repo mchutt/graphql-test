@@ -33,6 +33,11 @@ public class TodosTest implements IAbstractTest {
         api.validateResponse();
     }
 
+    @Test
+    public void testGetNonExistentTodoById() {
+        apiService.validateThatNonExistentResourceReturnsNotFound(new GetTodoByIdMethod());
+    }
+
     @DataProvider(name = "updateTodoData")
     public Object[][] updateTodoData() {
         Properties p1 = new Properties();

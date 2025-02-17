@@ -1,6 +1,7 @@
 package com.solvd.gorest.comments;
 
 import com.solvd.gorest.AuthorizedApiMethod;
+import com.solvd.gorest.utils.IResponseMethods;
 import com.zebrunner.carina.api.annotation.*;
 import com.zebrunner.carina.api.http.HttpMethodType;
 import com.zebrunner.carina.api.http.HttpResponseStatusType;
@@ -9,7 +10,7 @@ import com.zebrunner.carina.api.http.HttpResponseStatusType;
 @RequestTemplatePath(path = "api/graphql/comments/updateComment/rq.json")
 @ResponseTemplatePath(path = "api/graphql/comments/updateComment/rs.json")
 @SuccessfulHttpStatus(status = HttpResponseStatusType.OK_200)
-public class UpdateCommentMethod extends AuthorizedApiMethod {
+public class UpdateCommentMethod extends AuthorizedApiMethod implements IResponseMethods {
 
 
     public void setId(int id) {

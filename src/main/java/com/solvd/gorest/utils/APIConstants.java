@@ -6,4 +6,5 @@ public class APIConstants {
 
     //Error messages
     public static final String NOT_AUTHENTICATED_MESSAGE = "You need to authenticate your self to perform this action";
+    public static final String NOT_FOUND = "Resource not found!";
 }

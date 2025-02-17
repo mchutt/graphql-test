@@ -75,6 +75,11 @@ public class CommentsTest extends AbstractTest {
         api.validateResponse();
     }
 
+    @Test(description = "negative")
+    public void testUpdateNonExistentComment() {
+        apiService.validateThatNonExistentResourceReturnsNotFound(new UpdateCommentMethod());
+    }
+
     @Test
     public void testGetCommentById() {
         Comment comment = apiService.createComment();
@@ -85,6 +90,11 @@ public class CommentsTest extends AbstractTest {
         api.validateResponse();
     }
 
+    @Test(description = "negative")
+    public void testGetNonExistentCommentById() {
+        apiService.validateThatNonExistentResourceReturnsNotFound(new GetCommentByIdMethod());
+    }
+
     @Test
     public void testDeleteComment() {
         Comment comment = apiService.createComment();
@@ -93,6 +103,11 @@ public class CommentsTest extends AbstractTest {
         api.setId(comment.getId());
         api.callAPIExpectSuccess();
         api.validateResponse();
+    }
+
+    @Test(description = "negative")
+    public void testDeleteNonExistentComment() {
+        apiService.validateThatNonExistentResourceReturnsNotFound(new DeleteCommentMethod());
     }
 
 }

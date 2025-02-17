@@ -1,6 +1,7 @@
 package com.solvd.gorest.posts;
 
 import com.solvd.gorest.AuthorizedApiMethod;
+import com.solvd.gorest.utils.IResponseMethods;
 import com.zebrunner.carina.api.annotation.*;
 import com.zebrunner.carina.api.http.HttpMethodType;
 import com.zebrunner.carina.api.http.HttpResponseStatusType;
@@ -10,5 +11,5 @@ import com.zebrunner.carina.api.http.HttpResponseStatusType;
 @ResponseTemplatePath(path = "api/graphql/posts/updatePost/rs.json")
 @SuccessfulHttpStatus(status = HttpResponseStatusType.OK_200)
 @PropertiesPath(path = "api/graphql/posts/post.properties")
-public class UpdatePostMethod extends AuthorizedApiMethod {
+public class UpdatePostMethod extends AuthorizedApiMethod implements IResponseMethods {
 }

@@ -1,0 +1,30 @@
+{
+    "errors": [
+        {
+            "message": "Validation failed!",
+            "locations": [
+                {
+                    "line": 1,
+                    "column": 55
+                }
+            ],
+            "path": [
+                "createComment"
+            ],
+            "extensions": {
+                "code": "UNPROCESSABLE_ENTITY",
+                "result": [
+                    {
+                        "fieldName": "email",
+                        "messages": [
+                            "is invalid"
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "data": {
+        "createComment": null
+    }
+}

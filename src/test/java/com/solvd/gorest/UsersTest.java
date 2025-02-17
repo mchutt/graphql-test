@@ -38,6 +38,11 @@ public class UsersTest implements IAbstractTest {
         api.validateResponse();
     }
 
+    @Test(description = "negative")
+    public void testGetNonExistentUserById() {
+        apiService.validateThatNonExistentResourceReturnsNotFound(new GetUserByIdMethod());
+    }
+
     @Test
     public void testUpdateUser() {
         User user = apiService.createUser();
@@ -46,6 +51,11 @@ public class UsersTest implements IAbstractTest {
         api.getProperties().setProperty("id", user.getId());
         api.callAPIExpectSuccess();
         api.validateResponse();
+    }
+
+    @Test(description = "negative")
+    public void testUpdateNonExistentUser() {
+        apiService.validateThatNonExistentResourceReturnsNotFound(new UpdateUserMethod());
     }
 
     @DataProvider(name = "deleteUserData")

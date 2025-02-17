@@ -53,6 +53,11 @@ public class PostsTest implements IAbstractTest {
         api.validateResponse();
     }
 
+    @Test(description = "negative")
+    public void testGetNonExistentPostById() {
+        apiService.validateThatNonExistentResourceReturnsNotFound(new GetPostByIdMethod());
+    }
+
     @Test
     public void testUpdatePost() {
         Post post = apiService.createPost();
@@ -61,6 +66,11 @@ public class PostsTest implements IAbstractTest {
         api.getProperties().setProperty("id", String.valueOf(post.getId()));
         api.callAPIExpectSuccess();
         api.validateResponse();
+    }
+
+    @Test(description = "negative")
+    public void testUpdateNonExistentPost() {
+        apiService.validateThatNonExistentResourceReturnsNotFound(new UpdatePostMethod());
     }
 
     @Test
@@ -73,6 +83,11 @@ public class PostsTest implements IAbstractTest {
         api.validateResponse();
     }
 
+    @Test(description = "negative")
+    public void testDeleteNonExistentPost() {
+        apiService.validateThatNonExistentResourceReturnsNotFound(new DeletePostMethod());
+    }
+
     @Test
     public void testDeletePostWithOutToken() {
         Post post = apiService.createPost();
@@ -81,7 +96,7 @@ public class PostsTest implements IAbstractTest {
         api.getProperties().setProperty("id", String.valueOf(post.getId()));
         api.removeAuthorizationHeader();
         String response = api.callAPIExpectSuccess().asString();
-        Assert.assertEquals(DeletePostMethod.getErrorMessage(response), "You need to authenticate your self to perform this action");
+        Assert.assertEquals(api.getErrorMessage(response), "You need to authenticate your self to perform this action");
     }
 
     @Test
