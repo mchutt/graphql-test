@@ -1,5 +1,6 @@
 package com.solvd.gorest.services;
 
+import com.solvd.gorest.AuthorizedApiMethod;
 import com.solvd.gorest.comments.CreateCommentMethod;
 import com.solvd.gorest.models.Comment;
 import com.solvd.gorest.models.Post;
@@ -14,8 +15,7 @@ import com.zebrunner.carina.api.AbstractApiMethodV2;
 import io.restassured.response.Response;
 import org.testng.Assert;
 
-import static com.solvd.gorest.utils.APIConstants.NOT_FOUND;
-import static com.solvd.gorest.utils.APIConstants.RESOURCES_PATH;
+import static com.solvd.gorest.utils.APIConstants.*;
 
 public class ApiService {
 
@@ -67,14 +67,26 @@ public class ApiService {
     }
 
 
+
     /**
-     * @param api
-     * validates that calling the api with a non-existent id returns a 'Resource not found!' message
+     * Validates that calling the API with a non-existent ID returns a "Resource not found!" message.
+     * @param api the API method under test.
      */
-    public void validateThatNonExistentResourceReturnsNotFound(AbstractApiMethodV2 api) {
-        api.getProperties().setProperty("id", "1231233123");
+    public void validateNonexistentResourceReturnsNotFoundMessage(AbstractApiMethodV2 api) {
+        api.getProperties().setProperty("id", "1");
         String response = api.callAPIExpectSuccess().asString();
         String errorMessage = ((IResponseMethods) api).getErrorMessage(response);
         Assert.assertEquals(errorMessage, NOT_FOUND);
+    }
+
+    /**
+     * Validates that calling the API without an authentication header returns a "You need to authenticate yourself to perform this action" message.
+     * @param api the API method under test.
+     */
+    public void validateAPIWithoutAuthenticationReturnsNotAuthenticatedMessage(AbstractApiMethodV2 api) {
+        ((AuthorizedApiMethod) api).removeAuthorizationHeader();
+        String response = api.callAPIExpectSuccess().asString();
+        String errorMessage = ((IResponseMethods) api).getErrorMessage(response);
+        Assert.assertEquals(errorMessage, NOT_AUTHENTICATED_MESSAGE);
     }
 }

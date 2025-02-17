@@ -76,8 +76,15 @@ public class CommentsTest extends AbstractTest {
     }
 
     @Test(description = "negative")
+    public void testUpdateCommentWithoutAuthorization() {
+        UpdateCommentMethod api = new UpdateCommentMethod();
+        api.setId(1);
+        apiService.validateAPIWithoutAuthenticationReturnsNotAuthenticatedMessage(api);
+    }
+
+    @Test(description = "negative")
     public void testUpdateNonExistentComment() {
-        apiService.validateThatNonExistentResourceReturnsNotFound(new UpdateCommentMethod());
+        apiService.validateNonexistentResourceReturnsNotFoundMessage(new UpdateCommentMethod());
     }
 
     @Test
@@ -92,7 +99,7 @@ public class CommentsTest extends AbstractTest {
 
     @Test(description = "negative")
     public void testGetNonExistentCommentById() {
-        apiService.validateThatNonExistentResourceReturnsNotFound(new GetCommentByIdMethod());
+        apiService.validateNonexistentResourceReturnsNotFoundMessage(new GetCommentByIdMethod());
     }
 
     @Test
@@ -106,8 +113,16 @@ public class CommentsTest extends AbstractTest {
     }
 
     @Test(description = "negative")
+    public void testDeleteNonExistentCommentWithoutAuthorization() {
+        DeleteCommentMethod api = new DeleteCommentMethod();
+        api.setId(1);
+        apiService.validateAPIWithoutAuthenticationReturnsNotAuthenticatedMessage(api);
+    }
+
+
+    @Test(description = "negative")
     public void testDeleteNonExistentComment() {
-        apiService.validateThatNonExistentResourceReturnsNotFound(new DeleteCommentMethod());
+        apiService.validateNonexistentResourceReturnsNotFoundMessage(new DeleteCommentMethod());
     }
 
 }

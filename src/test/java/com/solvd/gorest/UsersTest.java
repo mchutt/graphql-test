@@ -76,7 +76,7 @@ public class UsersTest implements IAbstractTest {
 
     @Test(description = "negative")
     public void testGetNonExistentUserById() {
-        apiService.validateThatNonExistentResourceReturnsNotFound(new GetUserByIdMethod());
+        apiService.validateNonexistentResourceReturnsNotFoundMessage(new GetUserByIdMethod());
     }
 
     @Test
@@ -90,8 +90,16 @@ public class UsersTest implements IAbstractTest {
     }
 
     @Test(description = "negative")
+    public void testUpdateUserWithoutAuthorization() {
+        User user = apiService.createUser();
+        UpdateUserMethod api = new UpdateUserMethod();
+        api.getProperties().setProperty("id", user.getId());
+        apiService.validateAPIWithoutAuthenticationReturnsNotAuthenticatedMessage(api);
+    }
+
+    @Test(description = "negative")
     public void testUpdateNonExistentUser() {
-        apiService.validateThatNonExistentResourceReturnsNotFound(new UpdateUserMethod());
+        apiService.validateNonexistentResourceReturnsNotFoundMessage(new UpdateUserMethod());
     }
 
     @DataProvider(name = "deleteUserData")

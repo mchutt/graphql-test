@@ -5,7 +5,6 @@ import com.solvd.gorest.models.User;
 import com.solvd.gorest.posts.*;
 import com.solvd.gorest.services.ApiService;
 import com.zebrunner.carina.core.IAbstractTest;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -55,7 +54,7 @@ public class PostsTest implements IAbstractTest {
 
     @Test(description = "negative")
     public void testGetNonExistentPostById() {
-        apiService.validateThatNonExistentResourceReturnsNotFound(new GetPostByIdMethod());
+        apiService.validateNonexistentResourceReturnsNotFoundMessage(new GetPostByIdMethod());
     }
 
     @Test
@@ -69,8 +68,15 @@ public class PostsTest implements IAbstractTest {
     }
 
     @Test(description = "negative")
+    public void testUpdatePostWithoutAuthorization() {
+        UpdatePostMethod api = new UpdatePostMethod();
+        api.getProperties().setProperty("id", "1");
+        apiService.validateAPIWithoutAuthenticationReturnsNotAuthenticatedMessage(api);
+    }
+
+    @Test(description = "negative")
     public void testUpdateNonExistentPost() {
-        apiService.validateThatNonExistentResourceReturnsNotFound(new UpdatePostMethod());
+        apiService.validateNonexistentResourceReturnsNotFoundMessage(new UpdatePostMethod());
     }
 
     @Test
@@ -85,18 +91,14 @@ public class PostsTest implements IAbstractTest {
 
     @Test(description = "negative")
     public void testDeleteNonExistentPost() {
-        apiService.validateThatNonExistentResourceReturnsNotFound(new DeletePostMethod());
+        apiService.validateNonexistentResourceReturnsNotFoundMessage(new DeletePostMethod());
     }
 
-    @Test
-    public void testDeletePostWithOutToken() {
-        Post post = apiService.createPost();
-
+    @Test(description = "negative")
+    public void testDeletePostWithoutAuthorization() {
         DeletePostMethod api = new DeletePostMethod();
-        api.getProperties().setProperty("id", String.valueOf(post.getId()));
-        api.removeAuthorizationHeader();
-        String response = api.callAPIExpectSuccess().asString();
-        Assert.assertEquals(api.getErrorMessage(response), "You need to authenticate your self to perform this action");
+        api.getProperties().setProperty("id", "1");
+        apiService.validateAPIWithoutAuthenticationReturnsNotAuthenticatedMessage(api);
     }
 
     @Test

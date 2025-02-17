@@ -23,6 +23,13 @@ public class TodosTest implements IAbstractTest {
         apiService.createTodo();
     }
 
+    @Test(description = "negative")
+    public void testCreateTodoWithoutAuthorization() {
+        CreateTodoMethod api = new CreateTodoMethod();
+        api.getProperties().setProperty("userId", "1");
+        apiService.validateAPIWithoutAuthenticationReturnsNotAuthenticatedMessage(api);
+    }
+
     @Test
     public void testGetTodoById() {
         Todo todo = apiService.createTodo();
@@ -35,7 +42,7 @@ public class TodosTest implements IAbstractTest {
 
     @Test
     public void testGetNonExistentTodoById() {
-        apiService.validateThatNonExistentResourceReturnsNotFound(new GetTodoByIdMethod());
+        apiService.validateNonexistentResourceReturnsNotFoundMessage(new GetTodoByIdMethod());
     }
 
     @DataProvider(name = "updateTodoData")
@@ -65,6 +72,14 @@ public class TodosTest implements IAbstractTest {
         api.validateResponse();
     }
 
+    @Test(description = "negative")
+    public void testUpdateTodoWithoutAuthorization() {
+        UpdateTodoMethod api = new UpdateTodoMethod();
+        api.getProperties().setProperty("id", "1");
+        api.getProperties().setProperty("userId", "1");
+        apiService.validateAPIWithoutAuthenticationReturnsNotAuthenticatedMessage(api);
+    }
+
     @Test
     public void testDeleteTodo() {
         Todo todo = apiService.createTodo();
@@ -73,6 +88,21 @@ public class TodosTest implements IAbstractTest {
         api.setIdProperty(String.valueOf(todo.getId()));
         api.callAPIExpectSuccess();
         api.validateResponse();
+    }
+
+    @Test(description = "negative")
+    public void testDeleteTodoWithoutAuthorization() {
+        Todo todo = apiService.createTodo();
+
+        DeleteTodoMethod api = new DeleteTodoMethod();
+        api.setIdProperty(String.valueOf(todo.getId()));
+        apiService.validateAPIWithoutAuthenticationReturnsNotAuthenticatedMessage(api);
+    }
+
+
+    @Test(description = "negative")
+    public void testDeleteNonExistentTodo() {
+        apiService.validateNonexistentResourceReturnsNotFoundMessage(new DeleteTodoMethod());
     }
 
     @Test
